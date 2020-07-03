@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-    <link href="{{ asset('mmu/assets/css/site.css') }}" rel="stylesheet">
+    <link href="{{ asset('sample/assets/css/site.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome/css/all.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -42,42 +42,42 @@
         </div>
     </div>
     <!-- Core  -->
-  <script src="{{ asset('mmu/global/vendor/babel-external-helpers/babel-external-helpers.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/jquery/jquery.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/tether/tether.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/bootstrap/bootstrap.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/animsition/animsition.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/mousewheel/jquery.mousewheel.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/asscrollbar/jquery-asScrollbar.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/asscrollable/jquery-asScrollable.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/waves/waves.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/babel-external-helpers/babel-external-helpers.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/jquery/jquery.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/tether/tether.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/bootstrap/bootstrap.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/animsition/animsition.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/mousewheel/jquery.mousewheel.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/asscrollbar/jquery-asScrollbar.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/asscrollable/jquery-asScrollable.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/waves/waves.js') }}"></script>
     <!-- Plugins -->
-  <script src="{{ asset('mmu/global/vendor/jquery-mmenu/jquery.mmenu.min.all.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/switchery/switchery.min.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/intro-js/intro.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/screenfull/screenfull.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/slidepanel/jquery-slidePanel.js') }}"></script>
-  <script src="{{ asset('mmu/global/vendor/jquery-placeholder/jquery.placeholder.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/jquery-mmenu/jquery.mmenu.min.all.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/switchery/switchery.min.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/intro-js/intro.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/screenfull/screenfull.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/slidepanel/jquery-slidePanel.js') }}"></script>
+  <script src="{{ asset('sample/global/vendor/jquery-placeholder/jquery.placeholder.js') }}"></script>
   <!-- Scripts -->
-  <script src="{{ asset('mmu/global/js/State.js') }}"></script>
-  <script src="{{ asset('mmu/global/js/Component.js') }}"></script>
-  <script src="{{ asset('mmu/global/js/Plugin.js') }}"></script>
-  <script src="{{ asset('mmu/global/js/Base.js') }}"></script>
-  <script src="{{ asset('mmu/global/js/Config.js') }}"></script>
-  <script src="{{ asset('mmu/assets/js/Section/Menubar.js') }}"></script>
-  <script src="{{ asset('mmu/assets/js/Section/Sidebar.js') }}"></script>
-  <script src="{{ asset('mmu/assets/js/Section/PageAside.js') }}"></script>
-  <script src="{{ asset('mmu/assets/js/Section/GridMenu.js') }}"></script>
+  <script src="{{ asset('sample/global/js/State.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Component.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Plugin.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Base.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Config.js') }}"></script>
+  <script src="{{ asset('sample/assets/js/Section/Menubar.js') }}"></script>
+  <script src="{{ asset('sample/assets/js/Section/Sidebar.js') }}"></script>
+  <script src="{{ asset('sample/assets/js/Section/PageAside.js') }}"></script>
+  <script src="{{ asset('sample/assets/js/Section/GridMenu.js') }}"></script>
   <!-- Config -->
-  <script src="{{ asset('mmu/global/js/config/colors.js') }}"></script>
-  <script src="{{ asset('mmu/assets/js/config/tour.js') }}"></script>
+  <script src="{{ asset('sample/global/js/config/colors.js') }}"></script>
+  <script src="{{ asset('sample/assets/js/config/tour.js') }}"></script>
     <!-- Page -->
-  <script src="{{ asset('mmu/assets/js/Site.js') }}"></script>
-  <script src="{{ asset('mmu/global/js/Plugin/asscrollable.js') }}"></script>
-  <script src="{{ asset('mmu/global/js/Plugin/slidepanel.js') }}"></script>
-  <script src="{{ asset('mmu/global/js/Plugin/switchery.js') }}"></script>
-  <script src="{{ asset('mmu/global/js/Plugin/jquery-placeholder.js') }}"></script>
-  <script src="{{ asset('mmu/global/js/Plugin/material.js') }}"></script>
+  <script src="{{ asset('sample/assets/js/Site.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Plugin/asscrollable.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Plugin/slidepanel.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Plugin/switchery.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Plugin/jquery-placeholder.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Plugin/material.js') }}"></script>
 
   <!-- custom -->
   <script src="{{ asset('js/custom.js') }}"></script>
