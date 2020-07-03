@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="name">ISBN Number</label>
+            <span class="form-required">*</span>
+            <input type="text" class="form-control" name="isbn" id="isbn" value="{{ isset($book) ? $book['isbn'] : '' }}">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="name">Title</label>
+            <span class="form-required">*</span>
+            <input type="text" class="form-control" name="title" id="title" value="{{ isset($book) ? $book['title'] : '' }}">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="name">Publisher</label>
+            <span class="form-required">*</span>
+            <input type="text" class="form-control" name="publisher" id="publisher" value="{{ isset($book) ? $book['publisher'] : '' }}">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+		    <label for="category_id">Category</label>
+		    <select class="form-control" id="category_id" name="category_id">
+				<option value="">Please Choose one</option>
+				@foreach($categories as $category)
+					<option value="{{ $category->id }}" {{ isset($book) && $book->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+				@endforeach
+		    </select>
+		  </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+		    <label for="type">Type</label>
+		    <select class="form-control" id="type" name="type">
+				<option value="1" {{ isset($book) && $book->type == '1' ? 'selected' : '' }}>Fiction</option>
+				<option value="0" {{ isset($book) && $book->type == '0' ? 'selected' : '' }}>Non-Fiction</option>
+		    </select>
+		  </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+		    <label for="Status">Status</label>
+		    <select class="form-control" id="Status" name="status">
+				<option value="available" {{ isset($book) && $book->status == 'available' ? 'selected' : '' }}>Available</option>
+				<option value="not available" {{ isset($book) && $book->status == 'not available' ? 'selected' : '' }}>Not Available</option>
+				<option value="reserved" {{ isset($book) && $book->status == 'reserved' ? 'selected' : '' }}>Reserved</option>
+				<option value="missing" {{ isset($book) && $book->status == 'missing' ? 'selected' : '' }}>Missing</option>
+		    </select>
+		  </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="name">No of Books</label>
+            <span class="form-required">*</span>
+            <div class="input-group">
+                <input type="number" class="form-control" name="book_total" id="book_total" value="{{ isset($book) ? $book->bookItem()->count() : '' }}" {{ isset($book) ? 'readonly' : '' }}>
+                @isset($book)
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-main">Edit</button>
+                </span>
+                @endisset
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="input-group input-group-file">
+        <input type="text" class="form-control" readonly="" placeholder="Upload File">
+        <span class="input-group-btn">
+          <span class="btn btn-main btn-file">
+            <i class="icon md-upload" aria-hidden="true"></i>
+            <input type="file" name="book_cover" id="book_cover">
+          </span>
+        </span>
+      </div>
+    </div>
+</div>
+
+@isset($book)
+    <input type="hidden" name="id" value="{{ isset($book['id']) ? $book['id'] : '' }}">
+@endisset

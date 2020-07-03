@@ -1,0 +1,4 @@
+limas setup guide 
+
+
+php artisan db:seed --class=AdminTableSeeder
