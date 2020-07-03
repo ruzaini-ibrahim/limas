@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-header">
                   <i class="fas fa-table"></i>
-                    EDIT BOOKS
+                    EDIT BOOKSs
                     <a class="btn btn-main float-right" href="{{ route('book.index') }}" >Back</a>
                 </div>
                 <div class="card-block">
