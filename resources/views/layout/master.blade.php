@@ -41,6 +41,8 @@
   <link href="{{ asset('plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
   <!-- dropify -->
   <link href="{{ asset('js/dropify/css/dropify.css') }}" rel="stylesheet">
+  <!-- dropzone -->
+  <link href="{{ asset('js/dropzone/dropzone.css') }}" rel="stylesheet">
   <!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'> -->
   <!-- Scripts -->
   <script src="{{ asset('sample/global/vendor/breakpoints/breakpoints.js') }}"></script>
@@ -121,6 +123,9 @@
   
   <!-- dropify -->
   <script src="{{ asset('js/dropify/js/dropify.js') }}"></script>
+
+  <!-- dropzone -->
+  <script src="{{ asset('js/dropzone/dropzone.js') }}"></script>
 
   <!-- custom -->
   <script src="{{ asset('js/custom.js') }}"></script>

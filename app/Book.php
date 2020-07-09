@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\BookCategory;
 use App\BookItem;
+use App\Media;
 
 class Book extends Model
 {
@@ -20,5 +21,10 @@ class Book extends Model
     public function bookItem()
     {
     	return $this->hasMany(BookItem::class, 'book_id');
+    }
+
+    public function bookMedia()
+    {
+        return $this->hasMany(Media::class, 'belongs_to')->where('media.type','book');
     }
 }

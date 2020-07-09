@@ -10,7 +10,7 @@
                 <div class="card-header">
                   <i class="fas fa-table"></i>
                     LIST OF BOOKS
-                    <button class="btn btn-main float-right" href="javascript:void(0)" data-toggle="modal" data-target="#addBook" id="addButton">Add Book</button>
+                    <a class="btn btn-main btn-sm float-right" href="{{ route('book.create') }}" id="addButton">Add Book</a>
                 </div>
                 <div class="card-block">
                   <div class="table-responsive">
@@ -76,6 +76,8 @@
   var csvbutton = '<img class="exportbutton_img" ' + 'src="' + '{{ asset("images/icons/csv.png") }}"' + ' alt="csv" />';
   var printbutton = '<img class="exportbutton_img" ' + 'src="' + '{{ asset("images/icons/print.png") }}"' + ' alt="print" />';
 $('document').ready( function(){
+    $('.dropify').dropify();
+
     var table = $('#dataTable').DataTable({
       "processing": true,
       "serverSide": false,
