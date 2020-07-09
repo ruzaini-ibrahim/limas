@@ -38,6 +38,7 @@ Route::prefix('admin')->middleware('auth:admin')->group( function(){
 
 	//book management
 	//books
+	Route::post('book/coverAdd', 'BookController@coverAdd');
 	Route::get('book/records', 'BookController@records');
 	Route::resource('book','BookController');
 

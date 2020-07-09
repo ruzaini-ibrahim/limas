@@ -9,15 +9,19 @@ use Hash;
 use App\Book;
 use App\BookItem;
 use App\BookCategory;
+use App\Media;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Session;
 
 class BookController extends Controller
 {
     public function index()
     {
+        // Session::forget('test_delete');
+        // dd(Session::all());
         $categories = BookCategory::all();
         return view('book.index', compact("categories"));
     }
@@ -52,49 +56,82 @@ class BookController extends Controller
         ));
     }
 
+    public function coverAdd(Request $request)
+    {
+        if ($request->file('files')) {
+            $request_type = 'create';
+            if($request->has('book_id')){
+                $request_type = 'update'; //later for delete image
+            }
+            $this->upload_file($request, $request_type);
+            
+        }
+    }
+
+    private function upload_file(Request $request, $request_type = "")
+    {
+        $message = [];
+        $images = $request->file('files');
+        $data = [];
+        $sessionParams = [];
+    // dd($request->all(),$_FILES['files'], $request_type);
+    // dd(count($images), $_FILES['files']);
+        foreach ($images as $index => $image) {
+            $imageExt = $image->getClientOriginalExtension();
+            $path = Storage::disk('book')->path('');
+            $hashStr = Hash::make(Str::random(5));
+            $imageName = Carbon::now()->format('Ymd') . '-' . time() . '-' .Str::random(5) . '.' . $imageExt;
+            $imagePath = $path . $imageName;
+            $imageUrl = url('/storage/book_cover/' . $imageName);
+            $imageSize = $_FILES['files']['size'][$index];
+            // Storage::disk('book')->put($imageName,  File::get($image));
+            $data[] = $_FILES['files']['name'][$index];
+            if(move_uploaded_file($_FILES['files']['tmp_name'][$index], $imagePath)){
+                $imageData['file_name'] = $imageName;
+                $imageData['file_path'] = $imagePath;
+                $imageData['file_url'] = $imageUrl;
+                $imageData['file_size'] = $imageSize;
+
+                $sessionParams[] = $imageData;
+                $message['status'] = true;
+            }else{
+                $message['status'] = false;
+                $message['message'] = "Failed to upload file. Somthing is happening!";
+            }
+        }
+        // dd($imageName, $imagePath, $imageUrl);
+        // $data['image_url'] = $imageUrl;    
+        if($message['status']){
+            Session::put('book_images', $sessionParams);
+        }
+        return response()->json($message);
+    }
+
     public function create()
     {
-        //
+        $categories = BookCategory::all();
+        return view('book.add', compact('categories'));
     }
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        $validator = Validator::make($request->all(), [
+        // dd($request->session()->all());
+        $validateForm = $request->validate([
             'isbn' => ['required','max:50'],
             'title' => ['required','max:50'],
             'publisher' => ['required','max:50'],
             'category_id' => ['required'],
             'type' => ['required'],
             'status' => ['required'],
-            'book_cover' => ['image'],
         ]);
+        $data = $request->except('_token');
 
-        $validateResponse = json_decode(validator_message($validator));
-
-        if($validateResponse->error){
-            return response()->json(['status' => false, 'message' => $validateResponse->message]);
-        }
-        $data = $request->except('_token','abc');
-
-        if($request->file('book_cover')){
-            $image = $request->file('book_cover');
-            $imageExt = $image->getClientOriginalExtension();
-            $path = Storage::disk('book')->path('');
-            $hashStr = Hash::make(Str::random(5));
-            $imageName = Carbon::now()->format('Ymd') . $hashStr . '.' . $imageExt;
-            $imagePath = $path . $imageName;
-            $imageUrl = url('/storage/book_cover/' . $imageName);
-            Storage::disk('book')->put($imageName,  File::get($image));
-            // dd($imageName, $imagePath, $imageUrl);
-            $data['image_path'] = $imagePath;
-            $data['image_url'] = $imageUrl;
-        }
-
+        //create book
         $book = Book::create($data);
         
+        //create book items
         $itemData = [];
-        $itemTotal = (int)$request->get('book_total');
+        $itemTotal = (int) $request->get('book_total');
         $refNo = $book->id . substr(time(), -4) . rand(0, 999);
         for ($i = 0; $i < $itemTotal; $i++){
             $tempData = [
@@ -103,10 +140,26 @@ class BookController extends Controller
             ];
             $itemData[] = $tempData;
         }
+
+
         // dd($itemData);
         $bookItem = BookItem::insert($itemData);
 
-        return response()->json(['status' => true, 'message' => 'Book is successfully created!']);
+        //create book  media
+        if($images_file = $request->session()->get('book_images')){
+            foreach ($images_file as $index => $image) {
+                $images_file[$index]['belongs_to'] = $book->id;
+                $images_file[$index]['type'] = 'book';
+            }
+
+            $media = Media::insert($images_file);
+            // dd($images_file);
+            $request->session()->pull('book_images', 'default'); //delete session
+        }
+
+
+        return redirect()->route('book.index')->with('success','Book Successfully created');
+        // return redirect()->back()->with('success','Book Successfully created');
     }
 
     public function show($id)
@@ -118,13 +171,14 @@ class BookController extends Controller
     {
         $book = Book::find($id);
         $categories = BookCategory::all();
-        return view('book.edit', compact('book','categories'));
+        $bookMedias = $book->bookMedia;
+        return view('book.edit', compact('book','categories','bookMedias'));
     }
 
     public function update(Request $request, $id)
     {
-        dd($request->all());
-        $data = Book::find($id);
+        // dd($request->all());
+        $book = Book::find($id);
         $validator = Validator::make($request->all(), [
             'isbn' => ['required','max:50'],
             'title' => ['required','max:50'],
@@ -139,15 +193,40 @@ class BookController extends Controller
             return response()->json(['status' => false, 'message' => $validateResponse->message]);
         }
         $form = $request->except('_method','_token');
-        // dd($data);
-        $update = $data->update($form);
-        return response()->json(['status' => true, 'message' => 'Book successfully updated!']);
+        // update book
+        $update = $book->update($form);
+
+        //create book  media
+        if($images_file = $request->session()->get('book_images')){
+            foreach ($images_file as $index => $image) {
+                $images_file[$index]['belongs_to'] = $book->id;
+                $images_file[$index]['type'] = 'book';
+            }
+
+            $media = Media::insert($images_file);
+
+            $request->session()->pull('book_images', 'default'); //delete session
+        }
+        return redirect()->route('book.index')->with('success','Book Successfully updated');
     }
 
     public function destroy($id)
     {
-        $data = Book::find($id);
-        $data->delete();
+        $book = Book::find($id);
+
+        // $bookMedia = $book->bookMedia()->get()->toArray();
+
+        //delete book media storage
+        $bookMedia = $book->bookMedia()->pluck('file_name')->all();
+        foreach ($bookMedia as $index => $fileName) {
+            Storage::disk('book')->delete($fileName);
+        }
+
+        //delete book media 
+        $book->bookMedia()->delete();
+
+        //delete book
+        $book->delete();
         return response()->json(['status' => true, 'message' => 'Book successfully deleted!']);
     }
 }

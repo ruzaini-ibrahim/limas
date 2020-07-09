@@ -1,4 +1,7 @@
 $(document).ready( function(){
+
+    var adminUrl = window.location.origin + '/admin';
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     //getting csrf token
     $.ajaxSetup({
         headers: {
