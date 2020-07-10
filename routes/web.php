@@ -42,6 +42,11 @@ Route::prefix('admin')->middleware('auth:admin')->group( function(){
 	Route::get('book/records', 'BookController@records');
 	Route::resource('book','BookController');
 
+	//checkout
+	Route::post('checkout/getBookItem', 'CheckoutController@getBookItem');
+	Route::get('checkout/records', 'CheckoutController@records');
+	Route::resource('checkout','CheckoutController');
+
 	//categories
 	Route::get('category/records', 'CategoryController@records');
 	Route::resource('category','CategoryController');

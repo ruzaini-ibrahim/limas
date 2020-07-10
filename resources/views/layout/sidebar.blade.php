@@ -41,8 +41,8 @@
               <span class="site-menu-title">Books</span>
             </a>
           </li>
-          <li class="site-menu-item {{ Request::is('admin/administrator*') ? 'active' : '' }}">
-            <a class="animsition-link" href="{{ route('administrator.index') }}">
+          <li class="site-menu-item {{ Request::is('admin/checkout*') ? 'active' : '' }}">
+            <a class="animsition-link" href="{{ route('checkout.index') }}">
               <span class="site-menu-title">Checkout</span>
             </a>
           </li>

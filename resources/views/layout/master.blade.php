@@ -43,6 +43,8 @@
   <link href="{{ asset('js/dropify/css/dropify.css') }}" rel="stylesheet">
   <!-- dropzone -->
   <link href="{{ asset('js/dropzone/dropzone.css') }}" rel="stylesheet">
+  <!-- select2 -->
+  <link href="{{ asset('plugins/select2/css/select2.min.css') }}" rel="stylesheet">
   <!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'> -->
   <!-- Scripts -->
   <script src="{{ asset('sample/global/vendor/breakpoints/breakpoints.js') }}"></script>
@@ -108,6 +110,9 @@
   <script src="{{ asset('sample/global/js/Plugin/slidepanel.js') }}"></script>
   <script src="{{ asset('sample/global/js/Plugin/switchery.js') }}"></script>
   <script src="{{ asset('sample/global/js/Plugin/formatter.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Plugin/responsive-tabs.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Plugin/closeable-tabs.js') }}"></script>
+  <script src="{{ asset('sample/global/js/Plugin/tabs.js') }}"></script>
 
   <!-- Datatables -->
   <script src="{{asset('plugins/datatables/jquery.dataTables.js') }}"></script>
@@ -126,6 +131,9 @@
 
   <!-- dropzone -->
   <script src="{{ asset('js/dropzone/dropzone.js') }}"></script>
+  
+  <!-- select2 -->
+  <script src="{{ asset('plugins/select2/js/select2.min.js') }}"></script>
 
   <!-- custom -->
   <script src="{{ asset('js/custom.js') }}"></script>

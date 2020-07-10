@@ -2,6 +2,13 @@ $(document).ready( function(){
 
     var adminUrl = window.location.origin + '/admin';
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    var pdfbutton = '<img class="exportbutton_img" ' + 'src="' + '{{ asset("images/icons/pdf.png") }}"' + ' alt="pdf" />';
+    var excelbutton = '<img class="exportbutton_img" ' + 'src="' + '{{ asset("images/icons/excel.png") }}"' + ' alt="excel" />';
+    var csvbutton = '<img class="exportbutton_img" ' + 'src="' + '{{ asset("images/icons/csv.png") }}"' + ' alt="csv" />';
+    var printbutton = '<img class="exportbutton_img" ' + 'src="' + '{{ asset("images/icons/print.png") }}"' + ' alt="print" />';
+
+  
     //getting csrf token
     $.ajaxSetup({
         headers: {
@@ -60,4 +67,11 @@ function showToastr(title, message, type) {
 
     toastr[type](message, title)
 
+}
+
+//select2
+function applySelect2 (modal){
+    $('.select2').select2({
+      dropdownParent: $('#' + modal)
+    });
 }
