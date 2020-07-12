@@ -75,3 +75,90 @@ function applySelect2 (modal){
       dropdownParent: $('#' + modal)
     });
 }
+
+//datepicker
+function applyDatepicker (params){
+    if(params == ".datepicker") {
+        $(params).datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            clearBtn: true,
+            todayHighlight: true,
+        }).bind({
+            keydown: function(e) {
+                if (e.shiftKey === true ) {
+                    if (e.which == 9) {
+                        return true;
+                    }
+                    return false;
+                }
+                if (e.which==189) {
+                    return true;
+                }
+                if (e.which > 57) {
+                    return false;
+                }
+                if (e.which==32) {
+                    return false;
+                }
+                return true;
+            }
+        });        
+    }else if(params == ".datepicker-start-today") {
+        $(params).datepicker({
+            format: 'dd-mm-yyyy',
+            startDate:  new Date(),
+            autoclose: true,
+            clearBtn: true,
+            todayHighlight: true,
+        }).bind({
+            keydown: function(e) {
+                if (e.shiftKey === true ) {
+                    if (e.which == 9) {
+                        return true;
+                    }
+                    return false;
+                }
+                if (e.which==189) {
+                    return true;
+                }
+                if (e.which > 57) {
+                    return false;
+                }
+                if (e.which==32) {
+                    return false;
+                }
+                return true;
+            }
+        });        
+    }else if(params == ".datepicker-end-today") {
+        $(params).datepicker({
+            format: 'dd-mm-yyyy',
+            endDate:  new Date(),
+            autoclose: true,
+            clearBtn: true,
+            todayHighlight: true,
+        }).bind({
+            keydown: function(e) {
+                if (e.shiftKey === true ) {
+                    if (e.which == 9) {
+                        return true;
+                    }
+                    return false;
+                }
+                if (e.which==189) {
+                    return true;
+                }
+                if (e.which > 57) {
+                    return false;
+                }
+                if (e.which==32) {
+                    return false;
+                }
+                return true;
+            }
+        });        
+    } else {
+        $(params).datepicker();
+    }
+}

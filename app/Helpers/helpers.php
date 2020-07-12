@@ -31,3 +31,9 @@ function bookType($type)
 
         return $response;
 }
+
+function dateFormatYMD($date)
+{
+    $dateFormated = date("Y-m-d", strtotime($date));
+    return $dateFormated;
+}

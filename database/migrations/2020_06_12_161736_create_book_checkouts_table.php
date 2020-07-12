@@ -18,6 +18,7 @@ class CreateBookCheckoutsTable extends Migration
             $table->string('book_item_id');
             $table->enum('status', ['borrowed','returned','delayed'])->default('borrowed');
             $table->string('borrowed_by')->nullable();
+            $table->timestamp('borrowed_date', 0)->nullable();
             $table->timestamp('due_date', 0)->nullable();
             $table->timestamp('return_date', 0)->nullable();
             $table->timestamps();

@@ -13,12 +13,20 @@ class BookItem extends Model
 
     protected $appends = ['book_title'];
 
+    function getBookTitleAttribute() {
+		return $this->book->title;
+	}
+
     public function book()
     {
     	return $this->belongsTo(Book::class, 'book_id');
     }
 
-    function getBookTitleAttribute() {
-		return $this->book->title;
-	}
+    public function updateStatus($status = "")
+    {
+        $bookItem = $this->update([
+                'status' => $status
+            ]);
+        return $bookItem;
+    }
 }

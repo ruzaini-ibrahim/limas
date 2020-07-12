@@ -45,6 +45,8 @@
   <link href="{{ asset('js/dropzone/dropzone.css') }}" rel="stylesheet">
   <!-- select2 -->
   <link href="{{ asset('plugins/select2/css/select2.min.css') }}" rel="stylesheet">
+  <!--Datepicker-->
+  <link rel="stylesheet" href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}">
   <!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'> -->
   <!-- Scripts -->
   <script src="{{ asset('sample/global/vendor/breakpoints/breakpoints.js') }}"></script>
@@ -135,6 +137,9 @@
   <!-- select2 -->
   <script src="{{ asset('plugins/select2/js/select2.min.js') }}"></script>
 
+  <!-- datepicker -->
+  <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+  
   <!-- custom -->
   <script src="{{ asset('js/custom.js') }}"></script>
   @yield('scripts')

@@ -44,7 +44,9 @@ Route::prefix('admin')->middleware('auth:admin')->group( function(){
 
 	//checkout
 	Route::post('checkout/getBookItem', 'CheckoutController@getBookItem');
+	Route::get('checkout/recordsLender', 'CheckoutController@recordsLender');
 	Route::get('checkout/records', 'CheckoutController@records');
+	Route::get('checkout/{id}/showCreateModal', 'CheckoutController@showCreateModal');
 	Route::resource('checkout','CheckoutController');
 
 	//categories

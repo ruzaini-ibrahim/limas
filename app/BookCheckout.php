@@ -8,11 +8,12 @@ use App\BookItem;
 class BookCheckout extends Model
 {
     protected $fillable = [
-    	'book_id','status','borrowed_by','due_date','return_date'
+    	'book_item_id','status','borrowed_date','borrowed_by','due_date','return_date'
     ];
 
     public function bookItem()
     {
-    	return $this->belongsTo(BookItem::class, 'book_item_id');
+    	return $this->hasOne(BookItem::class, 'id', 'book_item_id');
     }
+
 }
