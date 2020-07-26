@@ -11,11 +11,15 @@ class BookItem extends Model
         'refNo','book_id','status','borrowed_on','borrowd_by','due_date','reserved_by'
     ];
 
-    protected $appends = ['book_title'];
+    protected $appends = ['book_title','book_publisher'];
 
     function getBookTitleAttribute() {
 		return $this->book->title;
 	}
+
+    function getBookPublisherAttribute() {
+        return $this->book->publisher;
+    }
 
     public function book()
     {
@@ -28,5 +32,10 @@ class BookItem extends Model
                 'status' => $status
             ]);
         return $bookItem;
+    }
+
+    public function statusAvailable()
+    {
+        return $this->where('status','available');
     }
 }

@@ -46,9 +46,14 @@
               <span class="site-menu-title">Checkout</span>
             </a>
           </li>
-          <li class="site-menu-item {{ Request::is('admin/administrator*') ? 'active' : '' }}">
-            <a class="animsition-link" href="{{ route('administrator.index') }}">
+          <li class="site-menu-item {{ Request::is('admin/return*') ? 'active' : '' }}">
+            <a class="animsition-link" href="{{ route('return.index') }}">
               <span class="site-menu-title">Return</span>
+            </a>
+          </li>
+          <li class="site-menu-item {{ Request::is('admin/fine*') ? 'active' : '' }}">
+            <a class="animsition-link" href="{{ route('fine.index') }}">
+              <span class="site-menu-title">Fine</span>
             </a>
           </li>
           <li class="site-menu-item {{ Request::is('admin/category*') ? 'active' : '' }}">

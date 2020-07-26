@@ -8,7 +8,7 @@
     <div class="col-md-12">
       <div class="panel">
         <div class="panel-heading">
-          <h3 class="panel-title">Checkout Book</h3>
+          <h3 class="panel-title">Return Book</h3>
         </div>
         <div class="panel-body">
           <div class="row">
@@ -16,58 +16,6 @@
               <div class="table-responsive">
                 <table class="table table-hover" id="dataTableLender" width="100%" cellspacing="0">
                   <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Current Lending</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Current Lending</th>
-                      <th>Action</th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel">
-        <div class="panel-heading">
-          <h3 class="panel-title">Checkout List</h3>
-        </div>
-        <div class="panel-body">
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-12">
-                      <div class="form-group">
-                          <label for="name">ISBN Number</label>
-                          <span class="form-required">*</span>
-                          <input type="text" class="form-control filter" name="filter_isbn" id="filter_isbn" value="test123">
-                      </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="table-responsive">
-                  <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
                       <tr>
                         <th>ID</th>
                         <th>Ref No</th>
@@ -76,7 +24,6 @@
                         <th>Borrow By</th>
                         <th>Borrow At</th>
                         <th>Due Date</th>
-                        <th>Return Date</th>
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
@@ -90,9 +37,55 @@
                         <th>Borrow By</th>
                         <th>Borrow At</th>
                         <th>Due Date</th>
-                        <th>Return Date</th>
                         <th>Status</th>
                         <th>Action</th>
+                      </tr>
+                    </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel">
+        <div class="panel-heading">
+          <h3 class="panel-title">Return List</h3>
+        </div>
+        <div class="panel-body">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-hover" id="dataTableReturn" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Ref No</th>
+                        <th>Isbn</th>
+                        <th>Title</th>
+                        <th>Borrow By</th>
+                        <th>Borrow At</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th>ID</th>
+                        <th>Ref No</th>
+                        <th>Isbn</th>
+                        <th>Title</th>
+                        <th>Borrow By</th>
+                        <th>Borrow At</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -106,19 +99,18 @@
   </div>
 </div>
 
-<div class="modal fade" id="addCheckout" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="addReturn" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-        <form id="checkoutAdd" enctype="multipart/form-data">
+        <form id="returnAdd" enctype="multipart/form-data">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="modal-header bg-purple-400">
-              <h5 class="modal-title purple-50" id="modalLabel">Checkout Book</h5>
+              <h5 class="modal-title purple-50" id="modalLabel">Returned Book</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
           </div>
           <div class="modal-body">
-            @include('checkout.form._add')
           </div>
           <div class="modal-footer">
               <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -135,7 +127,7 @@
         <form id="checkoutedit" enctype="multipart/form-data">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="modal-header bg-purple-400">
-              <h5 class="modal-title purple-50" id="modalLabel">Edit Checkout Book</h5>
+              <h5 class="modal-title purple-50" id="modalLabel">Edit Returned Book</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
@@ -158,10 +150,6 @@
 
 
 $('document').ready( function(){
-
-    applySelect2('addCheckout');
-
-    ajaxBookItem('#addCheckout');
 
     applyDatepicker('#borrowed_on');
 
@@ -201,26 +189,15 @@ $('document').ready( function(){
                 rows: ':visible'
               }
           },
-          {
-              text : '<i class="icon fa fa-plus"></i> Checkout',
-              className : 'btn btn-outline-main btn-sm btnAdd',
-              action: function ( e, dt, node, config ) {
-                  //This will send the page to the location specified
-                  // window.location.href = "{{ route('book.create') }}";
-                  $('.btnAdd')
-                    .attr('data-toggle', 'modal')
-                    .attr('data-target', '#addCheckout');
-              }
-          },
       ],
       select: true,
       ajax: {
-              url: '{{ url("admin/checkout/recordsLender") }}',
+              url: '{{ url("admin/return/recordsLender") }}',
             } 
     });
 
 
-    var table = $('#dataTable').DataTable({
+    var table = $('#dataTableReturn').DataTable({
       "processing": true,
       "serverSide": false,
       // "searching": false,
@@ -228,8 +205,6 @@ $('document').ready( function(){
       "dom": '<"row my-2"<"col-md-12 text-md-right text-center"B>><"row my-2"<"col-md-6"l><"col-md-6"f>r><t>ip',
       "order": [[ 0, "desc" ]],
       'columnDefs': [ {
-        'targets': [9], /* column index */
-        'orderable': false, /* true or false */
       }],
       buttons: [
           {
@@ -256,41 +231,18 @@ $('document').ready( function(){
                 rows: ':visible'
               }
           },
-          {
-              text : '<i class="icon fa fa-plus"></i> Checkout',
-              className : 'btn btn-outline-main btn-sm btnAdd',
-              action: function ( e, dt, node, config ) {
-                  //This will send the page to the location specified
-                  // window.location.href = "{{ route('book.create') }}";
-                  $('.btnAdd')
-                    .attr('data-toggle', 'modal')
-                    .attr('data-target', '#addCheckout');
-              }
-          },
       ],
       select: true,
       ajax: {
-              url: '{{ url("admin/checkout/records") }}',
-              data: function(data){
-                data.isbn = $('#filter_isbn').val();
-              }
+              url: '{{ url("admin/return/recordsReturn") }}',
             } 
     });
 
-    
-
-    $('.filter').on("keyup",function (){
-      console.log($('#filter_isbn').val());
-      table
-        .search( $(this).val() )
-        .draw();
-    });
-
-    $('#checkoutAdd').on('submit', function(e) {
+    $('#returnAdd').on('submit', function(e) {
       e.preventDefault(); 
       $.ajax({
         method: 'POST',
-        url: '{{ url("admin/checkout") }}',
+        url: '{{ url("admin/return") }}',
         data: new FormData(this),
         contentType: false,
         cache: false,
@@ -298,10 +250,9 @@ $('document').ready( function(){
       }).done(function(response) {
         if(response.status){
           showToastr('Success', response.message, 'success');
-          $('#addCheckout').modal('hide');
-          $('#checkoutAdd')[0].reset();
-          $('#dataTableLender').DataTable().ajax.reload();
-          $('#dataTable').DataTable().ajax.reload();
+          $('#addReturn').modal('hide');
+          $('#returnAdd')[0].reset();
+          $('#dataTableLender, #dataTableReturn').DataTable().ajax.reload();
 
         }else{
           showToastr('Unsuccessful', response.message, 'warning');
@@ -314,7 +265,7 @@ $('document').ready( function(){
       var id = $('#editBook input[name=id]').val();
       $.ajax({
         method: 'POST',
-        url: '{{ url("admin/checkout") }}/' + id,
+        url: '{{ url("admin/return") }}/' + id,
         data: $('#bookEdit').serialize(),
       }).done(function(response) {
         if(response.status){
@@ -331,28 +282,27 @@ $('document').ready( function(){
 
 });
 
-function addCheckout(id) {
+function addReturn(id) {
   $.ajax({
     method: 'get',
-    url: '{{ url("admin/checkout") }}/'+id+'/showCreateModal',
+    url: '{{ url("admin/return") }}/'+id+'/showCreateModal',
   }).done(function(response) {
-    $('#addCheckout').modal('show');
-    $('#addCheckout .modal-body').html(response);
-    applySelect2('addCheckout');
-    ajaxBookItem('#addCheckout');
+    $('#addReturn').modal('show');
+    $('#addReturn .modal-body').html(response);
     applyDatepicker('.datepicker');
+    $('#return_date').val(getCurrentDate());
   });
 }
 
 function editCheckout(id) {
   $.ajax({
     method: 'get',
-    url: '{{ url("admin/checkout") }}/'+id+'/edit',
+    url: '{{ url("admin/return") }}/'+id+'/edit',
   }).done(function(response) {
-    $('#addCheckout').modal('show');
-    $('#addCheckout .modal-body').html(response);
-    applySelect2('addCheckout');
-    ajaxBookItem('#addCheckout');
+    $('#addReturn').modal('show');
+    $('#addReturn .modal-body').html(response);
+    applySelect2('addReturn');
+    ajaxBookItem('#addReturn');
     applyDatepicker('.datepicker');
   });
 }
@@ -361,7 +311,7 @@ function deleteCheckout(id) {
   if(confirm('Are you want to delete this data?')){
     $.ajax({
       method: 'post',
-      url: '{{ url("admin/checkout") }}/'+id,
+      url: '{{ url("admin/return") }}/'+id,
       data: '_token='+csrf_token+'&_method=DELETE',
     }).done(function(response) {
       showToastr('Success', response.message, 'success');
@@ -370,63 +320,6 @@ function deleteCheckout(id) {
   }
 }
 
-function ajaxBookItem(modal) {
-  $(modal + ' #isbn').on('change',function (){
-      if ($(this).val() != "") {
-        $.ajax({
-            type: "POST",
-            url: '{{ url("admin/checkout/getBookItem") }}',
-            data: {
-                    bookItemId: $(this).val()
-                  },
-            success: function (data) {
-              // console.log( data.book.title);
-                if (data.status) {
-                  var title = data.book.title;
-                  var publisher = data.book.publisher;
-                  $('#title').val(title);
-                  $('#publisher').val(publisher);
-                  $('#refNo').empty().append('<option value="">Select Option</option>');
-
-                  if (data.bookItems.length) {
-                    $('#refNo').parent().find('.alert_refno').text('');
-                    $.each(data.bookItems, function (key, value) {
-                        $("#refNo").append($('<option>', {
-                            value: value.id,
-                            text: value.refNo + " " + value.status,
-                            disabled: function () {
-                              if (value.status == "available") {
-                                return false;
-                              } else {
-                                return true;
-                              }
-                            },
-                            style: function () {
-                              if (value.status != "available") {
-                                return "color:red";
-                              }
-                            },
-                            'data-mark': value.id
-                        }));
-                    });
-                    applySelect2('addCheckout');
-                  } else {
-                    $('#refNo').parent().find('.alert_refno').text('No book is registered!');
-                  }
-                } else {
-                    $('#refNo').parent().find('.alert_refno').text(data.message);
-                    $('#refNo').empty().append('<option value="">Select Option</option>');
-                }
-            }
-        });
-      }else{
-        $('#refNo').parent().find('.alert_refno').text('Please enter book isbn first');
-        $('#refNo').empty().append('<option value="">Select Option</option>');
-        applySelect2('addCheckout');
-        $('#title').val('');
-      }
-    });
-}
 </script>
 
 @endsection

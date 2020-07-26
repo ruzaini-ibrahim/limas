@@ -45,14 +45,14 @@ class CheckoutController extends Controller
                 $book->bookItem->refNo,
                 $book->bookItem->book->isbn,
                 $book->bookItem->book_title,
-                $book->borrowed_by,
+                $book->lender->name,
                 date_format($book->created_at,"Y-m-d H:i:s") ?? "null",
                 $book->due_date ?? "null",
                 $book->return_date ?? "null",
                 $book['status'],
                 '<a class="mx-1"><i class="fa fa-eye color-main"></i></a>
-                <a href="book/' . $book['id'] . '/edit" class="mx-1"><i class="fa fa-edit color-main"></i></a>
-                <a onclick="deleteBook(' . $book['id'] . ')" href="javascript:void(0)" class="mx-1"><i class="fa fa-trash-alt color-main"></i></a>',
+                <a onclick="editCheckout(' . $book['id'] . ')" href="javascript:void(0)" class="mx-1"><i class="fa fa-edit color-main"></i></a>
+                <a onclick="deleteCheckout(' . $book['id'] . ')" href="javascript:void(0)" class="mx-1"><i class="fa fa-trash-alt color-main"></i></a>',
             ];
             // array_push($responseTable, $data);
             $responseTable[] = $data;
@@ -115,6 +115,7 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
+        // dd(empty($old_book_id));
         $validator = Validator::make($request->all(), [
             'lender_name' => ['required'],
             'lender_email' => ['required'],
@@ -134,27 +135,31 @@ class CheckoutController extends Controller
 
         $formParams = $request->except('_token','lender_name','lender_email');
         $id = $request->get('id');
+        $old_book_id = $request->get('old_book');
+        $book_id = $request->get('refNo');
         $user = User::find($id);
-        $bookItem = BookItem::find($formParams['refNo']);
+        $bookItem = BookItem::find($book_id);
         
         $response = [];
         // dd($user->statusBookCheckout());
         //check current user checkout book. lend > 5 cant lend anymore
         if(!$user->statusBookCheckout()){
             $statusLender = 2; //maximum amount of checkout
-        }else if($bookItem->status != "available"){
+        }else if($bookItem->status != "available" && empty($old_book_id)){
             $statusLender = 3; //book not available
             $bookStatus = $bookItem->status ?? "";
-        }else{
+        }else if($old_book_id && $book_id != $old_book_id){
+            $oldBookItem = BookItem::find($old_book_id)->updateStatus("available");
+        }if(!isset($statusLender)){
             $data = [
-                'book_item_id' => $formParams['refNo'],
+                'book_item_id' => $book_id,
                 'status' => 'borrowed',
                 'borrowed_by' => $user->id,
                 'borrowed_date' => dateFormatYMD($formParams['borrowed_date']),
                 'due_date' => dateFormatYMD($formParams['due_date']),
             ];
             // dd($data);
-            $bookCheckout = BookCheckout::create($data);
+            $bookCheckout = BookCheckout::updateOrCreate(['id' => $request->get('checkout_id')], $data);
 
             //update bookitem status
             $bookItem = $bookItem->updateStatus("not available");
@@ -164,7 +169,7 @@ class CheckoutController extends Controller
         switch ($statusLender) {
             case 1:
                 $response['status'] = true;
-                $response['message'] = "Book successfully checked out!";
+                $response['message'] = $old_book_id ? 'Book successfully updated!' : 'Book successfully checked out!';
                 break;
             case 2:
                 $response['status'] = false;
@@ -190,7 +195,11 @@ class CheckoutController extends Controller
 
     public function edit($id)
     {
-        //
+        $bookCheckout = BookCheckout::find($id);
+        $books = Book::all();
+        $bookItems = BookItem::where('book_id',$bookCheckout->bookItem->book_id)->get();
+        // dd($bookItems);
+        return view('checkout.form._add', compact('bookCheckout','books','bookItems'));
     }
 
     
@@ -201,7 +210,9 @@ class CheckoutController extends Controller
 
     public function destroy($id)
     {
-        //
+        $data = BookCheckout::find($id);
+        $data->delete();
+        return response()->json(['status' => true, 'message' => 'Checkout successfully deleted!']);
     }
 
     public function getBookItem(Request $request)

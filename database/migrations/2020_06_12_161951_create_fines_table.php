@@ -15,6 +15,13 @@ class CreateFinesTable extends Migration
     {
         Schema::create('fines', function (Blueprint $table) {
             $table->id();
+            $table->string('book_item_id');
+            $table->enum('status', ['not paid','paid'])->default('not paid');
+            $table->string('borrowed_by')->nullable();
+            $table->timestamp('due_date', 0)->nullable();
+            $table->timestamp('return_date', 0)->nullable();
+            $table->timestamp('paid_date', 0)->nullable();
+            $table->double('paid_value',8,2)->default(0);
             $table->timestamps();
         });
     }

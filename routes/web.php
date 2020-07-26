@@ -49,6 +49,20 @@ Route::prefix('admin')->middleware('auth:admin')->group( function(){
 	Route::get('checkout/{id}/showCreateModal', 'CheckoutController@showCreateModal');
 	Route::resource('checkout','CheckoutController');
 
+	//return
+	Route::get('return/recordsLender', 'ReturnController@recordsLender');
+	Route::get('return/recordsReturn', 'ReturnController@recordsReturn');
+	Route::get('return/{id}/showCreateModal', 'ReturnController@showCreateModal');
+	Route::resource('return','ReturnController');
+
+
+	//fine
+	Route::get('fine/showPaymentModal', 'FineController@showPaymentModal');
+	Route::get('fine/recordsLender', 'FineController@recordsLender');
+	Route::get('fine/recordsFine', 'FineController@recordsFine');
+	Route::resource('fine','FineController');
+
+
 	//categories
 	Route::get('category/records', 'CategoryController@records');
 	Route::resource('category','CategoryController');

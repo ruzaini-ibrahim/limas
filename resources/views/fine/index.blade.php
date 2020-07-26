@@ -8,31 +8,37 @@
     <div class="col-md-12">
       <div class="panel">
         <div class="panel-heading">
-          <h3 class="panel-title">Checkout Book</h3>
+          <h3 class="panel-title">Fine</h3>
         </div>
         <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+          <a class="btn btn-main btn-sm float-right" href="javascript:void(0)" onclick="payFine()" data-toggle="modal" data-target="#addCategory" id="addButton"><i class="icon fa fa-plus"></i> Batch Payment</a>
+        </div>
+      </div>
           <div class="row">
             <div class="col-md-12">
               <div class="table-responsive">
                 <table class="table table-hover" id="dataTableLender" width="100%" cellspacing="0">
                   <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Current Lending</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Current Lending</th>
-                      <th>Action</th>
-                    </tr>
-                  </tfoot>
+                      <tr>
+                        <th>ID</th>
+                        <th>Ref No</th>
+                        <th>Isbn</th>
+                        <th>Title</th>
+                        <th>Borrow By</th>
+                        <th>Due Date</th>
+                        <th>Returned At</th>
+                        <th>Totals</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th colspan="8" class="text-center font-weight-700"></th>
+                        <th>Action</th>
+                      </tr>
+                    </tfoot>
                 </table>
               </div>
             </div>
@@ -46,27 +52,14 @@
     <div class="col-md-12">
       <div class="panel">
         <div class="panel-heading">
-          <h3 class="panel-title">Checkout List</h3>
+          <h3 class="panel-title">Paid List</h3>
         </div>
         <div class="panel-body">
           <div class="panel-body">
             <div class="row">
               <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-12">
-                      <div class="form-group">
-                          <label for="name">ISBN Number</label>
-                          <span class="form-required">*</span>
-                          <input type="text" class="form-control filter" name="filter_isbn" id="filter_isbn" value="test123">
-                      </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="table-responsive">
-                  <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                  <table class="table table-hover" id="dataTableFine" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>ID</th>
@@ -74,25 +67,23 @@
                         <th>Isbn</th>
                         <th>Title</th>
                         <th>Borrow By</th>
-                        <th>Borrow At</th>
                         <th>Due Date</th>
+                        <th>Returned At</th>
                         <th>Return Date</th>
                         <th>Status</th>
-                        <th>Action</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
-                        <th>ID</th>
-                        <th>Ref No</th>
-                        <th>Isbn</th>
-                        <th>Title</th>
-                        <th>Borrow By</th>
-                        <th>Borrow At</th>
-                        <th>Due Date</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         <th>Return Date</th>
                         <th>Status</th>
-                        <th>Action</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -106,23 +97,22 @@
   </div>
 </div>
 
-<div class="modal fade" id="addCheckout" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="payFine" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-        <form id="checkoutAdd" enctype="multipart/form-data">
+        <form id="paymentAdd" enctype="multipart/form-data">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="modal-header bg-purple-400">
-              <h5 class="modal-title purple-50" id="modalLabel">Checkout Book</h5>
+              <h5 class="modal-title purple-50" id="modalLabel">Payment Confirmation</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
           </div>
           <div class="modal-body">
-            @include('checkout.form._add')
           </div>
           <div class="modal-footer">
               <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-              <button class="btn btn-main" type="submit">Save</button>
+              <button class="btn btn-main" type="submit">Confirm</button>
           </div>
         </form>
         </div>
@@ -135,7 +125,7 @@
         <form id="checkoutedit" enctype="multipart/form-data">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="modal-header bg-purple-400">
-              <h5 class="modal-title purple-50" id="modalLabel">Edit Checkout Book</h5>
+              <h5 class="modal-title purple-50" id="modalLabel">Edit Returned Book</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
@@ -159,12 +149,10 @@
 
 $('document').ready( function(){
 
-    applySelect2('addCheckout');
-
-    ajaxBookItem('#addCheckout');
-
     applyDatepicker('#borrowed_on');
 
+
+     
     var tableLender = $('#dataTableLender').DataTable({
       "processing": true,
       "serverSide": false,
@@ -176,11 +164,61 @@ $('document').ready( function(){
         'targets': [4], /* column index */
         'orderable': false, /* true or false */
       }],
+      "footerCallback": function ( row, data, start, end, display ) {
+        var api = this.api(), data;
+
+        // converting to interger to find total
+        var intVal = function ( i ) {
+          return typeof i === 'string' ?
+            i.replace(/[\$,]/g, '')*1 :
+              typeof i === 'number' ?
+                i : 0;
+        };
+
+         var Total = api
+            .column( 7 )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0 );
+        var str_total = Total.toString();
+        var arr_total = str_total.split('.');
+        var cent = "";
+        if(arr_total[1] !== undefined)
+        {
+          if(arr_total[1] < 10 && arr_total[1].length == 1)
+          {
+            var cent = "0";
+          }
+        }
+        else
+        {
+          var cent = ".00";
+        }
+        // Update footer by showing the total with the reference of the column index 
+        $( api.column( 7 ).footer() ).html('Totals (RM) : ' + Total + cent);
+
+        $( api.column( 8 ).footer() ).html('<div class="border-w-0 checkbox-custom checkbox-main"><input type="checkbox" name="selectAll" id="selectAll"><label for="selectAll">Select All</label></div>');
+
+        $('input[type="checkbox"]#selectAll').click(function(){
+              if($(this).is(":checked")){
+                $('.checkbox-item').each(function (){
+                  $(this).find('input[type="checkbox"]').removeAttr('checked');
+                  $(this).find('input[type="checkbox"]').click();
+                });
+              }
+              else if($(this).is(":not(:checked)")){
+                  $('.checkbox-item').each(function (){
+                    $(this).find('input[type="checkbox"]').removeAttr('checked');
+                  });
+              }
+        });
+      },
       buttons: [
           {
               extend: 'csvHtml5',
               footer: true,
-              title: 'List of Checkout',
+              title: 'List of Fined',
               text: '<i class="icon fa fa-file-csv"></i> CSV',
               className : 'btn btn-outline-main btn-sm',
               titleAttr: 'Export CSV',
@@ -191,7 +229,7 @@ $('document').ready( function(){
           {
               extend: 'print',
               footer: true,
-              title: 'List of Checkout',
+              title: 'List of Fined',
               text : '<i class="icon fa fa-print"></i> Print',
               className : 'btn btn-outline-main btn-sm',
               titleAttr: 'Print',
@@ -201,26 +239,15 @@ $('document').ready( function(){
                 rows: ':visible'
               }
           },
-          {
-              text : '<i class="icon fa fa-plus"></i> Checkout',
-              className : 'btn btn-outline-main btn-sm btnAdd',
-              action: function ( e, dt, node, config ) {
-                  //This will send the page to the location specified
-                  // window.location.href = "{{ route('book.create') }}";
-                  $('.btnAdd')
-                    .attr('data-toggle', 'modal')
-                    .attr('data-target', '#addCheckout');
-              }
-          },
       ],
       select: true,
       ajax: {
-              url: '{{ url("admin/checkout/recordsLender") }}',
+              url: '{{ url("admin/fine/recordsLender") }}',
             } 
     });
 
 
-    var table = $('#dataTable').DataTable({
+    var table = $('#dataTableFine').DataTable({
       "processing": true,
       "serverSide": false,
       // "searching": false,
@@ -228,14 +255,12 @@ $('document').ready( function(){
       "dom": '<"row my-2"<"col-md-12 text-md-right text-center"B>><"row my-2"<"col-md-6"l><"col-md-6"f>r><t>ip',
       "order": [[ 0, "desc" ]],
       'columnDefs': [ {
-        'targets': [9], /* column index */
-        'orderable': false, /* true or false */
       }],
       buttons: [
           {
               extend: 'csvHtml5',
               footer: true,
-              title: 'List of Checkout',
+              title: 'List of Fined',
               text: '<i class="icon fa fa-file-csv"></i> CSV',
               className : 'btn btn-outline-main btn-sm',
               titleAttr: 'Export CSV',
@@ -246,7 +271,7 @@ $('document').ready( function(){
           {
               extend: 'print',
               footer: true,
-              title: 'List of Checkout',
+              title: 'List of Fined',
               text : '<i class="icon fa fa-print"></i> Print',
               className : 'btn btn-outline-main btn-sm',
               titleAttr: 'Print',
@@ -264,33 +289,21 @@ $('document').ready( function(){
                   // window.location.href = "{{ route('book.create') }}";
                   $('.btnAdd')
                     .attr('data-toggle', 'modal')
-                    .attr('data-target', '#addCheckout');
+                    .attr('data-target', '#payFine');
               }
           },
       ],
       select: true,
       ajax: {
-              url: '{{ url("admin/checkout/records") }}',
-              data: function(data){
-                data.isbn = $('#filter_isbn').val();
-              }
+              url: '{{ url("admin/fine/recordsFine") }}',
             } 
     });
 
-    
-
-    $('.filter').on("keyup",function (){
-      console.log($('#filter_isbn').val());
-      table
-        .search( $(this).val() )
-        .draw();
-    });
-
-    $('#checkoutAdd').on('submit', function(e) {
+    $('#paymentAdd').on('submit', function(e) {
       e.preventDefault(); 
       $.ajax({
         method: 'POST',
-        url: '{{ url("admin/checkout") }}',
+        url: '{{ url("admin/fine") }}',
         data: new FormData(this),
         contentType: false,
         cache: false,
@@ -298,10 +311,9 @@ $('document').ready( function(){
       }).done(function(response) {
         if(response.status){
           showToastr('Success', response.message, 'success');
-          $('#addCheckout').modal('hide');
-          $('#checkoutAdd')[0].reset();
-          $('#dataTableLender').DataTable().ajax.reload();
-          $('#dataTable').DataTable().ajax.reload();
+          $('#payFine').modal('hide');
+          $('#paymentAdd')[0].reset();
+          $('#dataTableLender, #dataTableFine').DataTable().ajax.reload();
 
         }else{
           showToastr('Unsuccessful', response.message, 'warning');
@@ -314,7 +326,7 @@ $('document').ready( function(){
       var id = $('#editBook input[name=id]').val();
       $.ajax({
         method: 'POST',
-        url: '{{ url("admin/checkout") }}/' + id,
+        url: '{{ url("admin/fine") }}/' + id,
         data: $('#bookEdit').serialize(),
       }).done(function(response) {
         if(response.status){
@@ -331,28 +343,37 @@ $('document').ready( function(){
 
 });
 
-function addCheckout(id) {
+function payFine() {
+  var batch_payment = [];
+  $('.checkbox-item input[type="checkbox"]:checked').each(function (){
+    batch_payment.push($(this).val());
+  });
   $.ajax({
     method: 'get',
-    url: '{{ url("admin/checkout") }}/'+id+'/showCreateModal',
+    url: '{{ url("admin/fine") }}/showPaymentModal',
+    data: 'batch_payment=' + batch_payment,
   }).done(function(response) {
-    $('#addCheckout').modal('show');
-    $('#addCheckout .modal-body').html(response);
-    applySelect2('addCheckout');
-    ajaxBookItem('#addCheckout');
-    applyDatepicker('.datepicker');
+    $('#payFine').modal('show');
+    $('#payFine .modal-body').html(response);
+    var data = $('#payFine input[name="fines_id[]"]').length;
+    if(!data)
+    {
+      $('#payFine button[type="submit"]').attr('disabled', true);
+    }else{
+      $('#payFine button[type="submit"]').removeAttr('disabled');
+    }
   });
 }
 
 function editCheckout(id) {
   $.ajax({
     method: 'get',
-    url: '{{ url("admin/checkout") }}/'+id+'/edit',
+    url: '{{ url("admin/fine") }}/'+id+'/edit',
   }).done(function(response) {
-    $('#addCheckout').modal('show');
-    $('#addCheckout .modal-body').html(response);
-    applySelect2('addCheckout');
-    ajaxBookItem('#addCheckout');
+    $('#payFine').modal('show');
+    $('#payFine .modal-body').html(response);
+    applySelect2('payFine');
+    ajaxBookItem('#payFine');
     applyDatepicker('.datepicker');
   });
 }
@@ -361,7 +382,7 @@ function deleteCheckout(id) {
   if(confirm('Are you want to delete this data?')){
     $.ajax({
       method: 'post',
-      url: '{{ url("admin/checkout") }}/'+id,
+      url: '{{ url("admin/fine") }}/'+id,
       data: '_token='+csrf_token+'&_method=DELETE',
     }).done(function(response) {
       showToastr('Success', response.message, 'success');
@@ -370,63 +391,6 @@ function deleteCheckout(id) {
   }
 }
 
-function ajaxBookItem(modal) {
-  $(modal + ' #isbn').on('change',function (){
-      if ($(this).val() != "") {
-        $.ajax({
-            type: "POST",
-            url: '{{ url("admin/checkout/getBookItem") }}',
-            data: {
-                    bookItemId: $(this).val()
-                  },
-            success: function (data) {
-              // console.log( data.book.title);
-                if (data.status) {
-                  var title = data.book.title;
-                  var publisher = data.book.publisher;
-                  $('#title').val(title);
-                  $('#publisher').val(publisher);
-                  $('#refNo').empty().append('<option value="">Select Option</option>');
-
-                  if (data.bookItems.length) {
-                    $('#refNo').parent().find('.alert_refno').text('');
-                    $.each(data.bookItems, function (key, value) {
-                        $("#refNo").append($('<option>', {
-                            value: value.id,
-                            text: value.refNo + " " + value.status,
-                            disabled: function () {
-                              if (value.status == "available") {
-                                return false;
-                              } else {
-                                return true;
-                              }
-                            },
-                            style: function () {
-                              if (value.status != "available") {
-                                return "color:red";
-                              }
-                            },
-                            'data-mark': value.id
-                        }));
-                    });
-                    applySelect2('addCheckout');
-                  } else {
-                    $('#refNo').parent().find('.alert_refno').text('No book is registered!');
-                  }
-                } else {
-                    $('#refNo').parent().find('.alert_refno').text(data.message);
-                    $('#refNo').empty().append('<option value="">Select Option</option>');
-                }
-            }
-        });
-      }else{
-        $('#refNo').parent().find('.alert_refno').text('Please enter book isbn first');
-        $('#refNo').empty().append('<option value="">Select Option</option>');
-        applySelect2('addCheckout');
-        $('#title').val('');
-      }
-    });
-}
 </script>
 
 @endsection

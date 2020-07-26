@@ -10,7 +10,7 @@
               <h3 class="panel-title text-center font-weight-bold">Admin Login</h3>
             </div>
             <div class="panel-body container-fluid">
-              <form autocomplete="off" method="POST" action="{{ route('admin.loginPost') }}">
+              <form method="POST" action="{{ route('admin.loginPost') }}">
                 @csrf
                 <div class="form-group form-material floating" data-plugin="formMaterial">
                   <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -30,8 +30,8 @@
                         </span>
                     @enderror
                 </div>
-                {{-- <div class="form-group row">
-                    <div class="col-md-6 offset-md-4">
+                <div class="form-group row">
+                    <div class="col-md-12 text-right">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
@@ -40,7 +40,7 @@
                             </label>
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
                 <div class="form-group row mt-5 justify-content-between">
                         <button type="submit" class="btn btn-outline-main btn-block">

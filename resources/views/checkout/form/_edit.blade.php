@@ -2,12 +2,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label for="lender_name">Lender Name</label>
-            @isset($user)
-            <input type="text" class="form-control" name="lender_name" id="lender_name" value="{{ isset($user) ? $user['name'] : '' }}" readonly>
-            @endisset
-            @isset($bookCheckout)
             <input type="text" class="form-control" name="lender_name" id="lender_name" value="{{ isset($bookCheckout) ? $bookCheckout->lender->name : '' }}" readonly>
-            @endisset
         </div>
     </div>
 </div>
@@ -16,12 +11,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label for="lender_email">Lender Email</label>
-            @isset($user)
-            <input type="text" class="form-control" name="lender_email" id="lender_email" value="{{ isset($user) ? $user['email'] : '' }}" readonly>
-            @endisset
-            @isset($bookCheckout)
             <input type="text" class="form-control" name="lender_email" id="lender_email" value="{{ isset($bookCheckout) ? $bookCheckout->lender->email : '' }}" readonly>
-            @endisset
         </div>
     </div>
 </div>
@@ -67,11 +57,11 @@
             <option value="">Please Choose</option>
             @isset($bookItems)
               @foreach($bookItems as $item)
-                <option value="{{ $item->id }}" {{ isset($bookCheckout) && $bookCheckout->bookItem->id == $item->id ? 'selected' : '' }} {{ isset($item->status) && $item->status != 'available' && $bookCheckout->bookItem->id != $item->id ? 'disabled' : ''   }}>{{ $item->refNo . " " . $item->status}}</option>
+                <option value="{{ $item->id }}" {{ isset($bookCheckout) && $bookCheckout->bookItem->id == $item->id ? 'selected' : '' }}>{{ $item->refNo . " " . $item->status}}</option>
               @endforeach
             @endisset
           </select>
-          <div class="text-danger alert_refno">
+          <div class="text-danger">
           @empty($bookItems) 
             Please enter book isbn first 
           @endempty
@@ -88,11 +78,11 @@
           <span class="input-group-addon">
             From
           </span>
-          <input type="text" class="form-control datepicker" id="borrowed_date" name="borrowed_date" autocomplete="off" value="{{ isset($bookCheckout->borrowed_date) ? dateFormatDMY($bookCheckout->borrowed_date) : dateToday() }}">
+          <input type="text" class="form-control datepicker" id="borrowed_date" name="borrowed_date" autocomplete="off" value="{{ dateFormatDMY($bookCheckout->borrowed_date) }}">
           <span class="input-group-addon">
             To
           </span>
-          <input type="text" class="form-control datepicker" id="due_date" name="due_date" autocomplete="off" value="{{ isset($bookCheckout->due_date) ? dateFormatDMY($bookCheckout->due_date) : ''}}">
+          <input type="text" class="form-control datepicker" id="due_date" name="due_date" autocomplete="off" value="{{ dateFormatDMY($bookCheckout->due_date) }}">
         </div>
       </div>
     </div>
@@ -100,10 +90,5 @@
 
 
 @isset($user)
-  <input type="hidden" name="id" value="{{ isset($user['id']) ? $user['id'] : '' }}">
-@endisset
-@isset($bookCheckout)
-  <input type="hidden" name="id" value="{{ $bookCheckout->lender->id }}">
-  <input type="hidden" name="checkout_id" value="{{ $bookCheckout->id }}">
-  <input type="hidden" name="old_book" value="{{ $bookCheckout->bookItem->id }}">
+    <input type="hidden" name="id" value="{{ isset($user['id']) ? $user['id'] : '' }}">
 @endisset

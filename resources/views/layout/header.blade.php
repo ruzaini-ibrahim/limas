@@ -47,7 +47,7 @@
               <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-card" aria-hidden="true"></i> Billing</a>
               <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-settings" aria-hidden="true"></i> Settings</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{ route('logout') }}" 
+              <a class="dropdown-item" href="{{ route('admin.logout') }}" 
                 onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">
                 <i class="icon md-power" aria-hidden="true"></i> {{ __('Logout') }}</a>
