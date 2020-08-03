@@ -85,7 +85,7 @@ class CheckoutController extends Controller
                 $user['id'],
                 $user['name'],
                 $user['email'],
-                count($user->bookCheckout),
+                $user->countBookCheckoutLend(),
                 '<a onclick="addCheckout(' . $user['id'] . ')" href="javascript:void(0)" type="button" class="btn btn-animate btn-animate-side btn-main btn-xs btn-round waves-effect waves-classic">
                     <span><i class="icon fa fa-plus" aria-hidden="true"></i>Checkout</span>
                   </a>',
@@ -115,7 +115,6 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        // dd(empty($old_book_id));
         $validator = Validator::make($request->all(), [
             'lender_name' => ['required'],
             'lender_email' => ['required'],
@@ -141,10 +140,13 @@ class CheckoutController extends Controller
         $bookItem = BookItem::find($book_id);
         
         $response = [];
-        // dd($user->statusBookCheckout());
+        // dd($user->countFine());
         //check current user checkout book. lend > 5 cant lend anymore
-        if(!$user->statusBookCheckout()){
+        if(!$user->statusBookCheckoutLend()){
             $statusLender = 2; //maximum amount of checkout
+        }else if($user->statusFine()){
+            $statusLender = 4; //check fine status
+            $total_fines = $user->countFine();
         }else if($bookItem->status != "available" && empty($old_book_id)){
             $statusLender = 3; //book not available
             $bookStatus = $bookItem->status ?? "";
@@ -178,6 +180,10 @@ class CheckoutController extends Controller
             case 3:
                 $response['status'] = false;
                 $response['message'] = "Failed to checkout! book is " .$bookStatus. "!";
+                break;
+            case 4:
+                $response['status'] = false;
+                $response['message'] = "Failed to checkout! ". $total_fines ." outstanding fines are found!";
                 break;
             default:
                 $response['status'] = false;

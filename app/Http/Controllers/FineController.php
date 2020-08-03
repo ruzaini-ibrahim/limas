@@ -41,7 +41,6 @@ class FineController extends Controller
         // $book = BookCheckout::find(4);
         // dd($book->return_date);
         // $diff = date_diff(date_create($book->return_date),date_create($book->due_date));
-        // dd($diff);
         $books = Book::all();
         $users = User::all();
         // date_default_timezone_set("Asia/Kuala_Lumpur");

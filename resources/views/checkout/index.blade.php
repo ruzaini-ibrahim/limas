@@ -201,17 +201,6 @@ $('document').ready( function(){
                 rows: ':visible'
               }
           },
-          {
-              text : '<i class="icon fa fa-plus"></i> Checkout',
-              className : 'btn btn-outline-main btn-sm btnAdd',
-              action: function ( e, dt, node, config ) {
-                  //This will send the page to the location specified
-                  // window.location.href = "{{ route('book.create') }}";
-                  $('.btnAdd')
-                    .attr('data-toggle', 'modal')
-                    .attr('data-target', '#addCheckout');
-              }
-          },
       ],
       select: true,
       ajax: {
@@ -256,17 +245,6 @@ $('document').ready( function(){
                 rows: ':visible'
               }
           },
-          {
-              text : '<i class="icon fa fa-plus"></i> Checkout',
-              className : 'btn btn-outline-main btn-sm btnAdd',
-              action: function ( e, dt, node, config ) {
-                  //This will send the page to the location specified
-                  // window.location.href = "{{ route('book.create') }}";
-                  $('.btnAdd')
-                    .attr('data-toggle', 'modal')
-                    .attr('data-target', '#addCheckout');
-              }
-          },
       ],
       select: true,
       ajax: {
@@ -277,6 +255,12 @@ $('document').ready( function(){
             } 
     });
 
+    $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
+    $('#dataTable thead tr:eq(1) th').each( function (i) {
+      var title = $(this).text();
+      $(this).html( '<input type="text" class="form-control" style="width: 100px" placeholder="'+title+'" />' );
+      $(this).find('input').unwrap().wrap('<td/>');
+    });
     
 
     $('.filter').on("keyup",function (){

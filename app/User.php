@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use App\BookCheckout;
+use App\Fine;
 
 class User extends Authenticatable
 {
@@ -43,15 +44,32 @@ class User extends Authenticatable
     {
         return $this->hasMany(BookCheckout::class, 'borrowed_by');
     }
-
-    public function countBookCheckout()
+    public function fines()
     {
-        return $this->bookCheckout->count();
+        return $this->hasMany(Fine::class, 'borrowed_by');
     }
 
-    public function statusBookCheckout()
+    public function countBookCheckoutLend()
     {
-        if($this->countBookCheckout() < 5)
+        return $this->bookCheckout()->where('book_checkouts.status','=','borrowed')->count();
+    }
+
+    public function statusBookCheckoutLend()
+    {
+        if($this->countBookCheckoutLend() < 5)
+            return true;
+        else
+            return false;
+    }
+
+    public function countFine()
+    {
+        return $this->fines()->where('fines.status','=','not paid')->count();
+    }
+
+    public function statusFine()
+    {
+        if($this->countFine() > 0)
             return true;
         else
             return false;

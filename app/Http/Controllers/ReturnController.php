@@ -133,14 +133,14 @@ class ReturnController extends Controller
         }
 
         $bookCheckout = BookCheckout::find($request->checkout_id);
-        $dueDate = $bookCheckout->getDueDate();
-        $returnDate = $request->get('return_date');
+        $dueDate = $bookCheckout->due_date;
+        $returnDate = dateFormatYMD($request->get('return_date'));
         
         $data = [
             'return_date' => dateFormatYMD($request->get('return_date')),
             'status' => 'returned',
         ];
-
+        // dd($returnDate , $dueDate, $returnDate > $dueDate);
         if($returnDate > $dueDate){
             $data['status'] = 'delayed';
             $fine = Fine::create([
@@ -151,6 +151,7 @@ class ReturnController extends Controller
             ]);
         }
         $bookReturn = BookCheckout::updateorcreate(['id' => $request->checkout_id], $data);
+        $bookItem = BookItem::find($bookCheckout->book_item_id)->updateStatus("available");
         
         return response()->json(['status' => true, 'message' => 'Successfully updated returned book!']);
     }
