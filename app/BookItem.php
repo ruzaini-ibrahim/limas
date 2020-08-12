@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Book;
+use App\BookCheckout;
 
 class BookItem extends Model
 {
@@ -24,6 +25,11 @@ class BookItem extends Model
     public function book()
     {
     	return $this->belongsTo(Book::class, 'book_id');
+    }
+
+    public function checkoutRecord()
+    {
+        return $this->hasMany(BookCheckout::class, 'book_item_id');
     }
 
     public function updateStatus($status = "")

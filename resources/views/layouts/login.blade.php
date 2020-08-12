@@ -30,7 +30,7 @@
             background: linear-gradient(#a635ab, #3f51b5);
         }
     </style>
-    <div class="login-main row p-4 h-100">
+    <div class="login-main row p-4 min-vh-100">
         <div class="col-md-6 text-white align-self-center text-center">
             @include('auth._cover')
         </div>

@@ -3,7 +3,7 @@
       <div class="form-group">
           <label for="name">ISBN Number</label>
           <span class="form-required">*</span>
-          <input type="text" class="form-control" name="isbn" id="isbn" value="{{ isset($book) ? $book['isbn'] : '' }}">
+          <input type="text" class="form-control req" name="isbn" id="isbn" value="{{ isset($book) ? $book['isbn'] : '' }}">
           @error('isbn')
             <div class="alert text-danger">{{ $message }}</div>
           @enderror
@@ -16,7 +16,7 @@
         <div class="form-group">
             <label for="name">Title</label>
             <span class="form-required">*</span>
-            <input type="text" class="form-control" name="title" id="title" value="{{ isset($book) ? $book['title'] : '' }}">
+            <input type="text" class="form-control req" name="title" id="title" value="{{ isset($book) ? $book['title'] : '' }}">
             @error('title')
             <div class="alert text-danger">{{ $message }}</div>
           @enderror
@@ -29,7 +29,7 @@
         <div class="form-group">
             <label for="name">Publisher</label>
             <span class="form-required">*</span>
-            <input type="text" class="form-control" name="publisher" id="publisher" value="{{ isset($book) ? $book['publisher'] : '' }}">
+            <input type="text" class="form-control req" name="publisher" id="publisher" value="{{ isset($book) ? $book['publisher'] : '' }}">
             @error('publisher')
             <div class="alert text-danger">{{ $message }}</div>
           @enderror
@@ -41,7 +41,7 @@
     <div class="col-md-12 @error('category_id') has-danger @enderror">
         <div class="form-group">
           <label for="category_id">Category</label>
-          <select class="form-control" id="category_id" name="category_id">
+          <select class="form-control req" id="category_id" name="category_id">
           <option value="">Please Choose one</option>
           @foreach($categories as $category)
             <option value="{{ $category->id }}" {{ isset($book) && $book->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>

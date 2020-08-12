@@ -58,10 +58,16 @@ $('document').ready( function(){
                         'x-csrf-token': CSRF_TOKEN,
                       },
                     });
-  $('#add_book').one('click', function(){
+  // $('#add_book').one('click', function(){
+  $('#add_book').on('click', function(){
     console.log($('.dz-preview').length);
+    var validate = formValidate();
     if($('.dz-preview').length > 0){
-      myDropzone.processQueue();
+      if(validate == 0){
+        myDropzone.processQueue();
+      }else{
+        showToastr('Unsuccessful!', 'Please fill in the required form!', 'warning');    
+      }
     }else{
       $('#bookAdd').submit();
     }
@@ -78,6 +84,27 @@ $('document').ready( function(){
   });
 });
 
+function formValidate()
+{
+  var error = 0;
+  $('.form-group .req').each(function() {
+    var form_group = $(this).parent();
+    form_group.removeClass('has-danger');
+    form_group.find('.alert.text-danger').remove();
+
+    if($(this).val() == "")
+    {
+      error++;
+      var label  = form_group.find('label').text();
+      form_group.addClass('has-danger');
+      form_group.append($('<div>', {
+        'class': 'alert text-danger',
+        text: label+' is required!'
+      }));
+    }
+  });
+  return error;
+}
 </script>
 
 @endsection

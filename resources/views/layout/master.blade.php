@@ -48,6 +48,9 @@
   <!--Datepicker-->
   <link rel="stylesheet" href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}">
   <!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'> -->
+
+  <!-- Lightbox -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
   <!-- Scripts -->
   <script src="{{ asset('sample/global/vendor/breakpoints/breakpoints.js') }}"></script>
   <script>csrf_token = '{{ csrf_token() }}';</script>
@@ -140,6 +143,9 @@
   <!-- datepicker -->
   <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
   
+  <!-- Lightbox -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js.map"></script>
   <!-- custom -->
   <script src="{{ asset('js/custom.js') }}"></script>
   @yield('scripts')

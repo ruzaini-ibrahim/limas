@@ -41,7 +41,7 @@ class BookController extends Controller
                 $book->category->name,
                 bookType($book['type']),
                 $book['status'],
-                '<a class="mx-1"><i class="fa fa-eye color-main"></i></a>
+                '<a href="book/' . $book['id'] . '" class="mx-1"><i class="fa fa-eye color-main"></i></a>
                 <a href="book/' . $book['id'] . '/edit" class="mx-1"><i class="fa fa-edit color-main"></i></a>
                 <a onclick="deleteBook(' . $book['id'] . ')" href="javascript:void(0)" class="mx-1"><i class="fa fa-trash-alt color-main"></i></a>',
             ];
@@ -164,7 +164,30 @@ class BookController extends Controller
 
     public function show($id)
     {
-        //
+        $book = Book::find($id);
+        $categories = BookCategory::all();
+        $bookMedias = $book->bookMedia;
+        $bookItems = $book->bookItem;
+        // dd($bookItems);
+        return view('book.show', compact('book','categories','bookMedias','bookItems'));
+    }
+
+    public function showBookItemRecords($id)
+    {
+        $bookItem = BookItem::find($id);
+        $bookCheckouts = $bookItem->checkoutRecord()->paginate(2);
+        // dd(url('/test'), url()->current() . '?page=');
+        // dd($bookItem, $bookCheckouts[0]->lender);
+        // dd("ok");
+        return view('book.form.bookRecords', compact('bookItem','bookCheckouts'));
+    }
+
+    public function test(Request $request, $id)
+    {
+        $books = Book::paginate(2);
+        // dd(url('/test'), url()->current() . '?page=');
+        // dd($request->all());
+        return view('book.test',['books'=>$books]);
     }
 
     public function edit($id)

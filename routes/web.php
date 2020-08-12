@@ -40,6 +40,8 @@ Route::prefix('admin')->middleware('auth:admin')->group( function(){
 	//books
 	Route::post('book/coverAdd', 'BookController@coverAdd');
 	Route::get('book/records', 'BookController@records');
+	Route::get('book/{id}/test', 'BookController@test');
+	Route::get('book/{id}/book-item', 'BookController@showBookItemRecords');
 	Route::resource('book','BookController');
 
 	//checkout
